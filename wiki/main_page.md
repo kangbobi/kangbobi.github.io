@@ -1,8 +1,33 @@
----
-redirect_from: "/"
----
+# Nama Proyek
 
-This is a sample of main page. You can edit it to start your wiki.
+## Daftar Isi
+- [Beranda](#beranda)
+- [Pengenalan](#pengenalan)
+- [Fitur](#fitur)
+- [Instalasi](#instalasi)
+- [Penggunaan](#penggunaan)
+- [Kontribusi](#kontribusi)
+- [Lisensi](#lisensi)
 
-For documentation, installation guide and demo of [git-wiki-theme](git-wiki-theme) visit this [link](http://drassil.github.io/git-wiki/)
+## Beranda
+Selamat datang di proyek ini!
 
+## Pengenalan
+Proyek ini adalah ...
+
+## Fitur
+- Fitur 1
+- Fitur 2
+- ...
+
+## Instalasi
+Panduan instalasi dapat ditemukan di [halaman ini](#).
+
+## Penggunaan
+Cara menggunakan proyek ini adalah ...
+
+## Kontribusi
+Kami menyambut kontribusi! Silakan lihat [pedoman kontribusi](#) untuk informasi lebih lanjut.
+
+## Lisensi
+Proyek ini dilisensikan di bawah [jenis lisensi](#).
