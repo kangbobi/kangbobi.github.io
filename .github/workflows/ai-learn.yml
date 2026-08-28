@@ -1,0 +1,25 @@
+name: AI Learn checks
+
+on:
+  push:
+    paths:
+      - 'ai-learn/**'
+      - '.github/workflows/ai-learn.yml'
+  pull_request:
+    paths:
+      - 'ai-learn/**'
+      - '.github/workflows/ai-learn.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run lesson logic tests
+        run: node --test ai-learn/tests/*.test.mjs
