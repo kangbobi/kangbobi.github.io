@@ -1,0 +1,9 @@
+const round=(v,d=6)=>Number(v.toFixed(d));
+export function activate(kind,x){if(kind==='relu')return Math.max(0,x);if(kind==='sigmoid')return 1/(1+Math.exp(-x));if(kind==='tanh')return Math.tanh(x);if(kind==='linear')return x;throw new Error(`unknown activation: ${kind}`)}
+export function neuron(inputs,weights,bias=0,activation='linear'){if(inputs.length!==weights.length)throw new Error('dimension mismatch');const z=inputs.reduce((s,x,i)=>s+x*weights[i],bias);return round(activate(activation,z))}
+export function denseForward(inputs,weights,biases,activation='relu'){if(weights.length!==biases.length)throw new Error('dimension mismatch');return weights.map((row,i)=>neuron(inputs,row,biases[i],activation))}
+export function mse(predictions,targets){if(!predictions.length||predictions.length!==targets.length)throw new Error('dimension mismatch');return round(predictions.reduce((s,p,i)=>s+(p-targets[i])**2,0)/predictions.length)}
+export function backpropSingle({x,y,w,b}){const prediction=w*x+b;const error=prediction-y;return{prediction:round(prediction),error:round(error),loss:round(error**2),dw:round(2*error*x),db:round(2*error)}}
+export function matmul(a,b){if(!a.length||!b.length||!b[0]?.length||a[0].length!==b.length)throw new Error('dimension mismatch');const cols=b[0].length;if(b.some(row=>row.length!==cols)||a.some(row=>row.length!==a[0].length))throw new Error('ragged matrix');return a.map(row=>Array.from({length:cols},(_,j)=>round(row.reduce((s,v,k)=>s+v*b[k][j],0))))}
+export function sgdStep(params,grads,learningRate){if(params.length!==grads.length)throw new Error('dimension mismatch');return params.map((p,i)=>round(p-learningRate*grads[i]))}
+export function trainingCurve({initialLoss=1,learningRate=.1,epochs=20,noise=0}){return Array.from({length:epochs},(_,i)=>{const base=initialLoss*Math.exp(-learningRate*i*2);return round(Math.max(0,base+noise*Math.sin(i*1.7)))})}
