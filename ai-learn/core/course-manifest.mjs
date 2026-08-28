@@ -1,0 +1,81 @@
+const level = (id, title, status, modules) => ({ id, title, status, modules });
+const mod = (id, title, href, published = false, summary = '') => ({ id, title, href, published, summary });
+
+export const COURSE_MANIFEST = [
+  level('level-1', 'Machine Learning Fundamentals', 'published', [
+    mod('01', 'Belajar dari data', './#module-1', true, 'Model, feature, target, loss.'),
+    mod('02', 'Generalization', './#module-2', true, 'Train/test, leakage, fit.'),
+    mod('03', 'Gradient Descent', './module-3.html', true, 'Weight, bias, optimization.'),
+    mod('04', 'Classification', './module-4.html', true, 'Probability dan threshold.'),
+    mod('05', 'Trees & Ensembles', './module-5.html', true, 'Decision tree dan random forest.'),
+    mod('06', 'Feature Engineering', './module-6.html', true, 'Scaling, encoding, derived features.'),
+    mod('07', 'Evaluation', './module-7.html', true, 'Confusion matrix dan metric trade-off.'),
+    mod('08', 'Operational ML Capstone', './module-8.html', true, 'Model ke workflow operasional.'),
+  ]),
+  level('level-2', 'Deep Learning & PyTorch', 'planned', [
+    mod('01', 'Neuron as a weighted decision', './level-2/01-neuron.html'),
+    mod('02', 'Activation functions', './level-2/02-activations.html'),
+    mod('03', 'Layers and forward pass', './level-2/03-forward-pass.html'),
+    mod('04', 'Loss and gradient', './level-2/04-loss-gradient.html'),
+    mod('05', 'Backpropagation', './level-2/05-backprop.html'),
+    mod('06', 'Tensors and PyTorch', './level-2/06-tensors.html'),
+    mod('07', 'Autograd and optimizer', './level-2/07-autograd.html'),
+    mod('08', 'Training a neural network', './level-2/08-training.html'),
+    mod('09', 'Deep-learning failure modes', './level-2/09-failure-modes.html'),
+    mod('10', 'Deep Learning Capstone', './level-2/10-capstone.html'),
+  ]),
+  level('level-3', 'Build an LLM From Scratch', 'planned', [
+    mod('01', 'Language modeling mental model', './level-3/01-language-modeling.html'),
+    mod('02', 'Tokenization', './level-3/02-tokenization.html'),
+    mod('03', 'Token embeddings', './level-3/03-embeddings.html'),
+    mod('04', 'Positional information', './level-3/04-position.html'),
+    mod('05', 'Self-attention intuition', './level-3/05-attention-intuition.html'),
+    mod('06', 'Attention math', './level-3/06-attention-math.html'),
+    mod('07', 'Causal masking and multi-head attention', './level-3/07-causal-multihead.html'),
+    mod('08', 'Transformer block', './level-3/08-transformer-block.html'),
+    mod('09', 'GPT assembly and forward pass', './level-3/09-gpt.html'),
+    mod('10', 'Pretraining', './level-3/10-pretraining.html'),
+    mod('11', 'Decoding', './level-3/11-decoding.html'),
+    mod('12', 'Fine-tuning', './level-3/12-finetuning.html'),
+    mod('13', 'Alignment overview', './level-3/13-alignment.html'),
+    mod('14', 'LLM Capstone', './level-3/14-capstone.html'),
+  ]),
+  level('level-4', 'Reasoning Models', 'planned', [
+    mod('01', 'Reasoning baseline and evaluation', './level-4/01-evaluation.html'),
+    mod('02', 'Inference-time scaling', './level-4/02-inference-scaling.html'),
+    mod('03', 'Best-of-N and majority voting', './level-4/03-best-of-n.html'),
+    mod('04', 'Self-consistency and self-refinement', './level-4/04-self-refinement.html'),
+    mod('05', 'Verifier and judge design', './level-4/05-verifier.html'),
+    mod('06', 'Reinforcement-learning mental model', './level-4/06-rl-mental-model.html'),
+    mod('07', 'Policy gradients intuition', './level-4/07-policy-gradient.html'),
+    mod('08', 'GRPO intuition and workflow', './level-4/08-grpo.html'),
+    mod('09', 'Reward hacking and evaluation traps', './level-4/09-reward-hacking.html'),
+    mod('10', 'Distillation', './level-4/10-distillation.html'),
+    mod('11', 'Reasoning system architecture', './level-4/11-architecture.html'),
+    mod('12', 'Reasoning Capstone', './level-4/12-capstone.html'),
+  ]),
+  level('level-5', 'Production AI Engineer', 'planned', [
+    mod('01', 'System boundaries', './level-5/01-system-boundaries.html'),
+    mod('02', 'Embeddings and semantic search', './level-5/02-semantic-search.html'),
+    mod('03', 'RAG architecture', './level-5/03-rag.html'),
+    mod('04', 'Structured outputs', './level-5/04-structured-output.html'),
+    mod('05', 'Tool calling', './level-5/05-tool-calling.html'),
+    mod('06', 'Agent loops', './level-5/06-agent-loops.html'),
+    mod('07', 'Memory and state', './level-5/07-memory.html'),
+    mod('08', 'AI evaluation', './level-5/08-evaluation.html'),
+    mod('09', 'Guardrails and security', './level-5/09-security.html'),
+    mod('10', 'Observability', './level-5/10-observability.html'),
+    mod('11', 'Performance engineering', './level-5/11-performance.html'),
+    mod('12', 'Deployment and versioning', './level-5/12-deployment.html'),
+    mod('13', 'Operational AI architecture', './level-5/13-operational-architecture.html'),
+    mod('14', 'Final Capstone', './level-5/14-capstone.html'),
+  ]),
+];
+
+export function flattenModules(manifest = COURSE_MANIFEST) {
+  return manifest.flatMap(level => level.modules.map(module => ({ ...module, levelId: level.id, levelTitle: level.title })));
+}
+
+export function findModule(levelId, moduleId, manifest = COURSE_MANIFEST) {
+  return manifest.find(level => level.id === levelId)?.modules.find(module => module.id === moduleId) ?? null;
+}
