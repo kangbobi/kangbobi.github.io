@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b1017" />
+  <meta name="description" content="AI-Learn — belajar machine learning dari intuisi, analogi, visualisasi, lalu kode." />
+  <title>AI-Learn — Level 1 Machine Learning</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Navigasi kursus">
+      <a class="brand" href="#top" aria-label="AI-Learn home">
+        <span class="brand-mark">A</span>
+        <span><strong>AI-Learn</strong><small>Engineering path</small></span>
+      </a>
+
+      <div class="progress-card">
+        <div class="progress-meta"><span>Level 1</span><strong id="progressLabel">0%</strong></div>
+        <div class="progress-track"><span id="progressBar"></span></div>
+        <small>Machine Learning Fundamental</small>
+      </div>
+
+      <nav class="lesson-nav">
+        <a href="#module-1" data-module="module-1"><span>01</span><div>Belajar dari data<small>Model, feature, label, loss</small></div></a>
+        <a href="#module-2" data-module="module-2"><span>02</span><div>Generalization<small>Train, test, overfitting</small></div></a>
+        <a href="#next" class="muted"><span>03</span><div>Gradient descent<small>Segera hadir</small></div></a>
+      </nav>
+
+      <div class="sidebar-note">Urutan belajar: <b>intuisi → visual → konsep → kode</b>.</div>
+    </aside>
+
+    <main id="top">
+      <header class="hero">
+        <div class="hero-kicker">LEVEL 1 · APPLIED MACHINE LEARNING</div>
+        <h1>Jangan hafal API.<br><span>Pahami cara model belajar.</span></h1>
+        <p>Kita mulai dari analogi engineer operasional, melihat pola secara visual, lalu membongkar matematika dan kode sedikit demi sedikit.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#module-1">Mulai belajar</a>
+          <a class="button ghost" href="#lab">Langsung ke lab</a>
+        </div>
+        <div class="concept-strip" aria-label="Alur machine learning">
+          <div><b>Data</b><small>pengalaman historis</small></div><i>→</i>
+          <div><b>Pattern</b><small>hubungan yang konsisten</small></div><i>→</i>
+          <div><b>Model</b><small>representasi matematis</small></div><i>→</i>
+          <div><b>Prediction</b><small>estimasi data baru</small></div>
+        </div>
+      </header>
+
+      <section class="lesson" id="module-1" data-track="module-1">
+        <div class="lesson-heading">
+          <div class="lesson-number">01</div>
+          <div><span class="eyebrow">MODULE 1</span><h2>Apa sebenarnya yang dimaksud “belajar”?</h2><p>Machine learning bukan sihir. Ia mencari pola matematis dari pengalaman yang kita sebut data.</p></div>
+        </div>
+
+        <article class="analogy-card">
+          <div class="analogy-icon">👷</div>
+          <div>
+            <span class="label">ANALOGI</span>
+            <h3>Engineer senior tidak menghafal semua kejadian</h3>
+            <p>Setelah bertahun-tahun melihat IT load, temperatur, humidity, dan cooling power, engineer mulai mengenali hubungan: “kalau kondisi seperti ini, cooling biasanya sekitar segini.”</p>
+          </div>
+          <div class="analogy-flow"><span>Pengalaman</span><b>→</b><span>Pola</span><b>→</b><span>Prediksi</span></div>
+        </article>
+
+        <div class="compare-grid">
+          <article class="panel">
+            <span class="label">PROGRAMMING BIASA</span>
+            <h3>Manusia menulis rule</h3>
+            <div class="flow-stack"><span>Data</span><span>+</span><span class="accent-box">Rules</span><span>↓</span><span>Output</span></div>
+            <code>if temperature &gt; 30:<br>&nbsp;&nbsp;status = "HOT"</code>
+          </article>
+          <article class="panel">
+            <span class="label">MACHINE LEARNING</span>
+            <h3>Komputer mencari rule</h3>
+            <div class="flow-stack"><span>Data + Output historis</span><span>↓</span><span class="accent-box">Learning</span><span>↓</span><span>Model</span></div>
+            <code>Cooling ≈ f(IT Load, Temp, ...)</code>
+          </article>
+        </div>
+
+        <article class="lab" id="lab">
+          <div class="lab-head"><div><span class="label">INTERACTIVE LAB</span><h3>Lihat pola sebelum menyentuh kode</h3></div><span class="live-pill">● LIVE</span></div>
+          <p class="muted-copy">Data di bawah ilustratif. Geser IT load dan lihat bagaimana sebuah model linear sederhana melakukan generalization.</p>
+
+          <div class="lab-grid">
+            <div class="control-panel">
+              <label for="loadSlider">IT Load <strong><span id="loadValue">350</span> kW</strong></label>
+              <input id="loadSlider" type="range" min="100" max="500" step="5" value="350" />
+              <div class="scale"><span>100 kW</span><span>500 kW</span></div>
+
+              <div class="prediction-card">
+                <small>MODEL PREDICTION</small>
+                <strong><span id="predictionValue">61.5</span> kW</strong>
+                <span>Cooling power</span>
+              </div>
+              <div class="formula">ŷ = <span>0.17</span> × x + <span>2</span></div>
+            </div>
+            <div class="chart-wrap">
+              <svg id="regressionChart" viewBox="0 0 640 360" role="img" aria-label="Scatter plot IT load terhadap cooling power"></svg>
+            </div>
+          </div>
+
+          <div class="insight"><b>Yang dipelajari model bukan tabelnya.</b><span>Model menyimpan parameter <code>w</code> dan <code>b</code> yang mewakili pola umum: <code>y = wx + b</code>.</span></div>
+        </article>
+
+        <div class="concept-grid">
+          <article><span class="token">X</span><h3>Feature</h3><p>Informasi yang diberikan ke model. Contoh: IT load, temperatur, humidity.</p></article>
+          <article><span class="token">y</span><h3>Target / label</h3><p>Nilai yang ingin dipelajari atau diprediksi. Contoh: cooling power.</p></article>
+          <article><span class="token">L</span><h3>Loss</h3><p>Ukuran seberapa buruk prediksi dibanding nilai aktual. Training berusaha mengecilkannya.</p></article>
+        </div>
+
+        <article class="training-loop">
+          <div><span class="label">MENTAL MODEL</span><h3>Training = coba → ukur salah → koreksi → ulangi</h3></div>
+          <div class="loop">
+            <span>Prediction</span><b>→</b><span>Compare actual</span><b>→</b><span class="danger">Loss</span><b>→</b><span>Update model</span><b>↺</b>
+          </div>
+          <div class="tries">
+            <div><small>TRY #1</small><b>40 kW</b><span>Error 13</span></div>
+            <div><small>TRY #2</small><b>47 kW</b><span>Error 6</span></div>
+            <div class="best"><small>TRY #3</small><b>51 kW</b><span>Error 2</span></div>
+            <div class="actual"><small>ACTUAL</small><b>53 kW</b><span>Target</span></div>
+          </div>
+        </article>
+
+        <article class="code-card">
+          <div class="code-head"><div><span class="label">BARU SEKARANG KODE</span><h3>Linear regression dengan scikit-learn</h3></div><button class="copy-button" data-copy="code1">Copy</button></div>
+          <pre id="code1"><code>import numpy as np
+from sklearn.linear_model import LinearRegression
+
+X = np.array([100, 150, 200, 250, 300, 350, 400, 450, 500]).reshape(-1, 1)
+y = np.array([20, 27, 36, 44, 53, 61, 69, 78, 87])
+
+model = LinearRegression()
+model.fit(X, y)
+
+print("weight:", model.coef_[0])
+print("bias:", model.intercept_)
+print("prediction:", model.predict([[375]])[0])</code></pre>
+          <p class="code-note"><code>fit(X, y)</code> bukan magic: ia mencari parameter yang membuat error sekecil mungkin.</p>
+        </article>
+
+        <button class="complete-button" data-complete="module-1">✓ Tandai Module 1 selesai</button>
+      </section>
+
+      <section class="lesson" id="module-2" data-track="module-2">
+        <div class="lesson-heading">
+          <div class="lesson-number">02</div>
+          <div><span class="eyebrow">MODULE 2</span><h2>Model bisa hafal, tapi belum tentu pintar</h2><p>Tujuan ML bukan sempurna di data latihan. Tujuannya bekerja pada data yang belum pernah dilihat.</p></div>
+        </div>
+
+        <article class="analogy-card">
+          <div class="analogy-icon">📝</div>
+          <div><span class="label">ANALOGI</span><h3>Murid hafal kunci jawaban</h3><p>Kalau latihan dan ujian memakai soal yang sama, nilai 100 tidak membuktikan ia memahami penjumlahan. Model juga harus diuji dengan data baru.</p></div>
+          <div class="analogy-flow"><span>Hafalan</span><b>≠</b><span>Pemahaman pola</span></div>
+        </article>
+
+        <div class="split-card">
+          <div class="split-title"><span class="label">DATASET SPLIT</span><h3>Jangan menguji model dengan soal latihan</h3></div>
+          <div class="dataset-bar"><span class="train">70% TRAIN</span><span class="validation">15% VALIDATION</span><span class="test">15% TEST</span></div>
+          <div class="split-explain"><div><b>Train</b><span>boleh dipelajari</span></div><div><b>Validation</b><span>pilih konfigurasi</span></div><div><b>Test</b><span>ujian akhir unseen</span></div></div>
+        </div>
+
+        <article class="lab fit-lab">
+          <div class="lab-head"><div><span class="label">INTERACTIVE LAB</span><h3>Underfit vs good fit vs overfit</h3></div></div>
+          <div class="fit-controls" role="group" aria-label="Pilih kompleksitas model">
+            <button data-fit="underfit">Underfit</button>
+            <button data-fit="good" class="active">Good fit</button>
+            <button data-fit="overfit">Overfit</button>
+          </div>
+          <div class="fit-grid">
+            <div class="chart-wrap"><svg id="fitChart" viewBox="0 0 640 360" role="img" aria-label="Visualisasi model fit"></svg></div>
+            <div class="fit-result">
+              <span class="label">DIAGNOSIS</span>
+              <h3 id="fitTitle">Good fit</h3>
+              <p id="fitDescription">Model cukup fleksibel untuk menangkap pola utama tanpa mengejar noise.</p>
+              <dl><div><dt>Train error</dt><dd id="trainError">4 kW</dd></div><div><dt>Test error</dt><dd id="testError">5 kW</dd></div></dl>
+            </div>
+          </div>
+        </article>
+
+        <div class="diagnostic-table" role="table" aria-label="Diagnosis fit model">
+          <div class="tr header" role="row"><span>Condition</span><span>Train error</span><span>Test error</span><span>Interpretasi</span></div>
+          <div class="tr" role="row"><b>Underfit</b><span>High</span><span>High</span><span>Belum menangkap pola</span></div>
+          <div class="tr highlight" role="row"><b>Good fit</b><span>Low</span><span>Low</span><span>Generalization baik</span></div>
+          <div class="tr" role="row"><b>Overfit</b><span>Very low</span><span>High</span><span>Menghafal noise</span></div>
+        </div>
+
+        <article class="warning-card">
+          <span>⚠</span><div><span class="label">DATA LEAKAGE</span><h3>Model bisa terlihat jenius karena “melihat masa depan”</h3><p>Kalau target kita failure 30 menit ke depan tetapi feature berisi <b>Failure Alarm</b> yang muncul saat failure, skor 99% tidak berguna. Pertanyaan wajib: <i>apakah informasi ini benar-benar tersedia saat prediksi dilakukan?</i></p></div>
+        </article>
+
+        <article class="code-card">
+          <div class="code-head"><div><span class="label">KODE</span><h3>Train/test split dan MAE</h3></div><button class="copy-button" data-copy="code2">Copy</button></div>
+          <pre id="code2"><code>from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_absolute_error
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+model = LinearRegression().fit(X_train, y_train)
+y_pred = model.predict(X_test)
+
+mae = mean_absolute_error(y_test, y_pred)
+print(f"MAE: {mae:.2f} kW")</code></pre>
+          <p class="code-note">Untuk time-series, jangan asal random split. Masa lalu harus melatih model untuk menghadapi masa depan.</p>
+        </article>
+
+        <article class="quiz-card">
+          <span class="label">CHECKPOINT</span><h3>Cek pemahaman</h3>
+          <form id="quizForm">
+            <fieldset><legend>1. Train error 0.1 kW, test error 25 kW. Paling mungkin?</legend><label><input type="radio" name="q1" value="a"> Underfitting</label><label><input type="radio" name="q1" value="b"> Overfitting</label><label><input type="radio" name="q1" value="c"> Generalization sempurna</label></fieldset>
+            <fieldset><legend>2. Kenapa test set tidak boleh dipakai untuk training?</legend><label><input type="radio" name="q2" value="a"> Agar test mencerminkan unseen data</label><label><input type="radio" name="q2" value="b"> Karena test set selalu lebih kecil</label><label><input type="radio" name="q2" value="c"> Karena scikit-learn melarang</label></fieldset>
+            <fieldset><legend>3. Failure Alarm yang muncul setelah failure dipakai memprediksi failure adalah...</legend><label><input type="radio" name="q3" value="a"> Feature engineering</label><label><input type="radio" name="q3" value="b"> Regularization</label><label><input type="radio" name="q3" value="c"> Data leakage</label></fieldset>
+            <button class="button primary" type="submit">Periksa jawaban</button>
+            <div id="quizResult" class="quiz-result" aria-live="polite"></div>
+          </form>
+        </article>
+
+        <button class="complete-button" data-complete="module-2">✓ Tandai Module 2 selesai</button>
+      </section>
+
+      <section class="next-section" id="next">
+        <span class="eyebrow">NEXT</span><h2>Module 3 — Linear Regression From Scratch</h2>
+        <p>Kita akan menghapus “magic” dari <code>model.fit()</code>: mulai dari weight random, hitung loss, cari arah gradient, lalu update parameter sendiri.</p>
+        <div class="next-tags"><span>Gradient descent</span><span>Learning rate</span><span>Loss surface</span><span>Weight & bias</span></div>
+      </section>
+
+      <footer>AI-Learn · materi belajar original untuk memahami AI dari fondasi engineering.</footer>
+    </main>
+  </div>
+  <script src="./app.js" defer></script>
+</body>
+</html>
