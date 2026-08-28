@@ -10,6 +10,11 @@ export function getLessonNavigation(manifest, levelId, moduleId) {
   return { level, current: level.modules[index], previous: level.modules[index - 1] ?? null, next: level.modules[index + 1] ?? null };
 }
 
+export function resolveLessonHref(levelId, href) {
+  const prefix = `./${levelId}/`;
+  return typeof href === 'string' && href.startsWith(prefix) ? `./${href.slice(prefix.length)}` : href;
+}
+
 export function mountLessonShell({ levelId, moduleId, root = document.body } = {}) {
   if (!root || !levelId || !moduleId) return null;
   const nav = getLessonNavigation(COURSE_MANIFEST, levelId, moduleId);
@@ -26,14 +31,14 @@ export function mountLessonShell({ levelId, moduleId, root = document.body } = {
   track.append(fill); meter.append(meterText, track); shell.append(meter);
   const list = node('nav', { className: 'ai-course-module-list' });
   for (const item of nav.level.modules) {
-    const link = node('a', { text: `${item.id} · ${item.title}`, attrs: { href: safeHref(item.href), 'aria-current': item.id === moduleId ? 'page' : null } });
+    const link = node('a', { text: `${item.id} · ${item.title}`, attrs: { href: safeHref(resolveLessonHref(levelId, item.href)), 'aria-current': item.id === moduleId ? 'page' : null } });
     if (item.id === moduleId) link.classList.add('current');
     list.append(link);
   }
   shell.append(list);
   const controls = node('div', { className: 'ai-course-prevnext' });
-  if (nav.previous) controls.append(node('a', { text: `← ${nav.previous.title}`, attrs: { href: safeHref(nav.previous.href) } }));
-  if (nav.next) controls.append(node('a', { text: `${nav.next.title} →`, attrs: { href: safeHref(nav.next.href) } }));
+  if (nav.previous) controls.append(node('a', { text: `← ${nav.previous.title}`, attrs: { href: safeHref(resolveLessonHref(levelId, nav.previous.href)) } }));
+  if (nav.next) controls.append(node('a', { text: `${nav.next.title} →`, attrs: { href: safeHref(resolveLessonHref(levelId, nav.next.href)) } }));
   shell.append(controls);
   const done = node('button', { className: 'ai-course-complete', text: '✓ Tandai module selesai', attrs: { type: 'button' } });
   done.addEventListener('click', () => {
